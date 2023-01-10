@@ -42,31 +42,7 @@ jobs:
       - name: Install build dependence
         uses: ConorMacBride/install-package@v1.1.0
         with:
-          apt: |
-            debhelper
-            ca-certificates
-            cmake
-            git
-            libasound2
-            libfl-dev
-            libfontconfig1-dev
-            libgconf-2-4
-            libgtk2.0-dev
-            libglib2.0-dev
-            libharfbuzz-dev
-            libnspr4
-            libnss3
-            libpulse0
-            libqt5webchannel5-dev
-            libqt5x11extras5-dev
-            libx11-dev
-            libxext-dev
-            libxss-dev
-            libxtst-dev
-            mesa-common-dev
-            pkg-config
-            qtbase5-private-dev
-            qttools5-dev-tools
+          apt: debhelper ca-certificates cmake git libasound2 libfl-dev libfontconfig1-dev libgconf-2-4 libgtk2.0-dev libglib2.0-dev libharfbuzz-dev libnspr4 libnss3 libpulse0 libqt5webchannel5-dev libqt5x11extras5-dev libx11-dev libxext-dev libxss-dev libxtst-dev mesa-common-dev pkg-config qtbase5-private-dev qttools5-dev-tools
               #      - name: Install go dependence
               #        run: |
               #          go get github.com/smartystreets/goconvey
