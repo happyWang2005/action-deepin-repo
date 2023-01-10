@@ -21,10 +21,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        arch: ['amd64','386','arm64','arm']
+        arch: ['amd64','arm64','arm']
 
     container:
-      image: ubuntu:bionic
+      image: ubuntu:latest
       options: --platform ${{ matrix.arch }}
 
     steps:
