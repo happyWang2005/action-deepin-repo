@@ -24,11 +24,11 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-          path: '.tmp/'
 
       - uses: actions/checkout@v3
         with:
           repository: 'martyr-deepin/qcef'
+          path: 'qcef'
           ref: '1.1.8'
           submodules: 'recursive'
 
@@ -36,25 +36,23 @@ jobs:
       - name: fix
         run:
           pwd
-          cp .tmp/qcef_dialog_handler.cpp src/core/
-      # Runs a set of commands using the runners shell
-      #      - name: Install build dependence
-      #        run: |
-      #          apt update
-      #          apt install \
-      #           gio-2.0 \
-      #           glib-2.0 \
-      #           x11 \
-      #           gdk-pixbuf-2.0 \
-      #           libpulse \
-      #           mobile-broadband-provider-info 
-      #
-      #      - name: Install go dependence
-      #        run: |
-      #          go get github.com/smartystreets/goconvey
-      #          go get github.com/howeyc/fsnotify
-      #          go get gopkg.in/check.v1
-      #          go get github.com/linuxdeepin/go-x11-client
+          cp qcef_dialog_handler.cpp qcef/src/core/
+       Runs a set of commands using the runners shell
+        
+      - name: Install build dependence
+        run: |
+          apt update
+          apt install \
+              debhelper cmake libfl-dev libgtk2.0-dev libharfbuzz-dev \
+              libpulse0 libqt5webchannel5-dev libqt5x11extras5-dev libxss-dev libxtst-dev \
+              mesa-common-dev qtbase5-private-dev qttools5-dev-tools
+
+              #      - name: Install go dependence
+              #        run: |
+              #          go get github.com/smartystreets/goconvey
+              #          go get github.com/howeyc/fsnotify
+              #          go get gopkg.in/check.v1
+              #          go get github.com/linuxdeepin/go-x11-client
 
       - name: Build debian package
         run: | 
