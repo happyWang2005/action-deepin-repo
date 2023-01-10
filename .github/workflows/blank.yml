@@ -58,4 +58,5 @@ jobs:
 
       - name: Build debian package
         run: | 
+          cd qcef
           dpkg-buildpackage
