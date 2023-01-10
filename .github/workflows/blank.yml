@@ -28,7 +28,10 @@ jobs:
       options: --platform ${{ matrix.arch }}
 
     steps:
-      - run: apt install sudo git -y 
+      - run: |
+          apt update -y
+          apt install sudo git -y 
+
       - name: Install build dependence
         uses: ConorMacBride/install-package@v1.1.0
         with:
