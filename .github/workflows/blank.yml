@@ -40,11 +40,12 @@ jobs:
         
           #Runs a set of commands using the runners shell
       - name: Install build dependence
-        run: |
-          sudo apt update && sudo apt install \
-              debhelper cmake libfl-dev libgtk2.0-dev libharfbuzz-dev \
-              libpulse0 libqt5webchannel5-dev libqt5x11extras5-dev libxss-dev libxtst-dev \
-              mesa-common-dev qtbase5-private-dev qttools5-dev-tools
+        uses: ConorMacBride/install-package@v1.1.0
+        with:
+          apt: |
+              debhelper cmake libfl-dev libgtk2.0-dev libharfbuzz-dev
+              libpulse0 libqt5webchannel5-dev libqt5x11extras5-dev libxss-dev
+              libxtst-dev mesa-common-dev qtbase5-private-dev qttools5-dev-tools
 
               #      - name: Install go dependence
               #        run: |
