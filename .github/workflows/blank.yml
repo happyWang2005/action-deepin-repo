@@ -34,7 +34,7 @@ jobs:
 
           #debug
       - name: fix
-        run:
+        run: |
           pwd
           cp qcef_dialog_handler.cpp qcef/src/core/
        Runs a set of commands using the runners shell
