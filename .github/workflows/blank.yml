@@ -24,7 +24,6 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-        with: path:main
 
       - uses: actions/checkout@v3
         with:
@@ -33,9 +32,10 @@ jobs:
           ref: '1.1.8'
           submodules: 'recursive'
 
+          #debug
       - name: fix
         run:
-          pwd #debug
+          pwd
           cp qcef_dialog_handler.cpp qcef/src/core/
       # Runs a set of commands using the runners shell
       #      - name: Install build dependence
