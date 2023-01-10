@@ -15,23 +15,55 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
+  build-arm:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: [armv6l, armv7l, aarch64]
+        include:
+        - arch: armv6l
+          cpu: arm1176
+          base_image: raspios_lite:latest
+          cpu_info: raspberrypi_zero_w
+        - arch: armv7l
+          cpu: cortex-a7
+          base_image: raspios_lite:latest
+          cpu_info: raspberrypi_3b
+        - arch: aarch64
+          cpu: cortex-a53
+          base_image: raspios_lite_arm64:latest
+          cpu_info: raspberrypi_zero2_w_arm64_w
+    steps:
+
+    - uses: actions/checkout@v3
+      with:
+        repository: 'martyr-deepin/qcef'
+        path: 'qcef'
+        ref: '1.1.8'
+        submodules: 'recursive'
+
+    - uses: pguyot/arm-runner-action@v2
+      with:
+        base_image: ${{ matrix.base_image }}
+        cpu: ${{ matrix.cpu }}
+        cpu_info: ${{ matrix.cpu_info }}
+        copy_repository_path: qcef
+        bind_mount_repository: true
+        commands: |
+            test `uname -m` = ${{ matrix.arch }}
+            grep Model /proc/cpuinfo
+
+            apt update
+            apt install debhelper ca-certificates cmake git libasound2 libfl-dev libfontconfig1-dev libgconf-2-4 libgtk2.0-dev libglib2.0-dev libharfbuzz-dev libnspr4 libnss3 libpulse0 libqt5webchannel5-dev libqt5x11extras5-dev libx11-dev libxext-dev libxss-dev libxtst-dev mesa-common-dev pkg-config qtbase5-private-dev qttools5-dev-tools -y
+
+  build-x86:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     strategy:
       matrix:
         arch: ['amd64','arm64']
 
-    container:
-      image: ubuntu:latest
-      options: --platform ${{ matrix.arch }}
-
     steps:
-      - run: |
-          apt update -y
-          apt install sudo git -y 
-
       - name: Install build dependence
         uses: ConorMacBride/install-package@v1.1.0
         with:
@@ -45,9 +77,6 @@ jobs:
           path: 'qcef'
           ref: '1.1.8'
           submodules: 'recursive'
-      - run: |
-          git submodule update --init --recursive
-          git submodule update --remote
 
           #debug
       - name: fix
