@@ -35,7 +35,10 @@ jobs:
           repository: 'martyr-deepin/qcef'
           path: 'qcef'
           ref: '1.1.8'
-          submodules: 'recursive'
+            #submodules: 'recursive'
+      - run: |
+          git submodule update --init --recursive
+          git submodule update --remote
 
           #debug
       - name: fix
