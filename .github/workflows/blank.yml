@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        arch: ['amd64','arm64','arm']
+        arch: ['amd64','arm64']
 
     container:
       image: ubuntu:latest
