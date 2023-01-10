@@ -52,5 +52,16 @@ jobs:
 
       - name: Build debian package
         run: | 
-          cd qcef
+          cd
           dpkg-buildpackage
+
+      - name: Collect outputs
+        run: |
+          ls ~/
+          mkdir ~/out
+          cp ~/*.deb ~/*.tar.xz  ~/out/
+
+      - name: 
+        uses: fnkr/github-action-ghr@v1.3
+        with:
+          GHR_PATH: '~/out/'
