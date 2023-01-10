@@ -19,10 +19,15 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: ['amd64','386','arm64','arm']
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    container:
+      image: ubuntu:bionic
+      options: --platform ${{ matrix.arch }}
+
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE so your job can access it
       - uses: actions/checkout@v3
 
       - uses: actions/checkout@v3
@@ -57,11 +62,11 @@ jobs:
 
       - name: Collect outputs
         run: |
-          mkdir ~/out
-          cp $(find ~/ -name "*.deb") ~/out/
-          cp $(find ~/ -name "*.tar.xz")  ~/out/
+          mkdir ./out
+          cp $(find ~/ -name "*.deb") ./out/
+          cp $(find ~/ -name "*.tar.xz")  ./out/
 
       - name: Release
         uses: fnkr/github-action-ghr@v1.3
         with:
-          GHR_PATH: '~/out'
+          GHR_PATH: out/
