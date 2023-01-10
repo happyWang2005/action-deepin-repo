@@ -24,11 +24,11 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
+          path: '.tmp/'
 
       - uses: actions/checkout@v3
         with:
           repository: 'martyr-deepin/qcef'
-          path: 'qcef'
           ref: '1.1.8'
           submodules: 'recursive'
 
@@ -36,7 +36,7 @@ jobs:
       - name: fix
         run:
           pwd
-          cp qcef_dialog_handler.cpp qcef/src/core/
+          cp .tmp/qcef_dialog_handler.cpp src/core/
       # Runs a set of commands using the runners shell
       #      - name: Install build dependence
       #        run: |
@@ -58,5 +58,4 @@ jobs:
 
       - name: Build debian package
         run: | 
-          cd qcef
           dpkg-buildpackage
