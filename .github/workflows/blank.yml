@@ -1,14 +1,14 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI_go-lib
+name: CI_qcef
 
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "go-lib" ]
+    branches: [ "qcef" ]
   pull_request:
-    branches: [ "go-lib" ]
+    branches: [ "qcef" ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -25,27 +25,34 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
         with:
-          repository: 'martyr-deepin/deepin-download'
-          ref: 6.0.0
+          repository: 'martyr-deepin/qcef'
+          path: 'qcef'
+          ref: '1.1.8'
+          submodules: 'recursive'
+      - uses: actions/checkout@v3
 
+      - name: fix
+        run:
+          pwd #debug
+          cp qcef_dialog_handler.cpp qcef/src/core/
       # Runs a set of commands using the runners shell
-      - name: Install build dependence
-        run: |
-          apt update
-          apt install \
-           gio-2.0 \
-           glib-2.0 \
-           x11 \
-           gdk-pixbuf-2.0 \
-           libpulse \
-           mobile-broadband-provider-info 
-
-      - name: Install go dependence
-        run: |
-          go get github.com/smartystreets/goconvey
-          go get github.com/howeyc/fsnotify
-          go get gopkg.in/check.v1
-          go get github.com/linuxdeepin/go-x11-client
+      #      - name: Install build dependence
+      #        run: |
+      #          apt update
+      #          apt install \
+      #           gio-2.0 \
+      #           glib-2.0 \
+      #           x11 \
+      #           gdk-pixbuf-2.0 \
+      #           libpulse \
+      #           mobile-broadband-provider-info 
+      #
+      #      - name: Install go dependence
+      #        run: |
+      #          go get github.com/smartystreets/goconvey
+      #          go get github.com/howeyc/fsnotify
+      #          go get gopkg.in/check.v1
+      #          go get github.com/linuxdeepin/go-x11-client
 
       - name: Build debian package
         run: | 
